@@ -1,7 +1,23 @@
 import "./App.css";
 import socket from "./server";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [user,setUser] = useState(null)
+  useEffect(() => {
+    askUserName()
+  },[])
+
+  const askUserName = () => {
+    const userName = prompt("이름을 입력해주세요.");
+    console.log("uuu", userName);
+    
+    socket.emit("login", userName, (res)=>{
+          if(res?.ok){
+            setUser(res.data) 
+          }
+    })
+  };
   return (
     <div>
       <div className="App"></div>
